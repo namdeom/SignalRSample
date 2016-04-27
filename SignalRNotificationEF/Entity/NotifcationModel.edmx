@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ServiceEdgeCommonModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="NotificationDetails">
+          <Key>
+            <PropertyRef Name="NotificationId" />
+          </Key>
+          <Property Name="NotificationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="NotificationTypeId" Type="int" Nullable="false" />
+          <Property Name="NotificationNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+          <Property Name="NotificationStatus" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="CreatedUpdatedBy" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedUpdatedByName" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="NotificationMessages">
+          <Key>
+            <PropertyRef Name="NotificationMessageId" />
+          </Key>
+          <Property Name="NotificationId" Type="uniqueidentifier" />
+          <Property Name="DisplayText" Type="nvarchar(max)" />
+          <Property Name="NotificationMessageId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NotificationRecipients">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="NotificationId" Type="uniqueidentifier" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" />
+          <Property Name="UserId" Type="uniqueidentifier" />
+          <Property Name="IsRead" Type="bit" />
+          <Property Name="Role" Type="nvarchar" MaxLength="50" />
+          <Property Name="NotificationExpiry" Type="datetime" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NotificationTypes">
+          <Key>
+            <PropertyRef Name="NotificationTypeId" />
+          </Key>
+          <Property Name="NotificationType" Type="nvarchar" MaxLength="50" />
+          <Property Name="NotificationTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="ServiceEdgeCommonModelStoreContainer">
+          <EntitySet Name="NotificationDetails" EntityType="Self.NotificationDetails" Schema="notification" store:Type="Tables" />
+          <EntitySet Name="NotificationMessages" EntityType="Self.NotificationMessages" Schema="notification" store:Type="Tables" />
+          <EntitySet Name="NotificationRecipients" EntityType="Self.NotificationRecipients" Schema="notification" store:Type="Tables" />
+          <EntitySet Name="NotificationTypes" EntityType="Self.NotificationTypes" Schema="notification" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ServiceEdgeCommonModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="NotificationDetail">
+          <Key>
+            <PropertyRef Name="NotificationId" />
+          </Key>
+          <Property Name="NotificationId" Type="Guid" Nullable="false" />
+          <Property Name="NotificationTypeId" Type="Int32" Nullable="false" />
+          <Property Name="NotificationNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="NotificationStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="CreatedUpdatedBy" Type="Guid" Nullable="false" />
+          <Property Name="CreatedUpdatedByName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="NotificationRecipient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="NotificationId" Type="Guid" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="Guid" />
+          <Property Name="IsRead" Type="Boolean" />
+          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NotificationExpiry" Type="DateTime" Precision="3" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="NotificationType">
+          <Key>
+            <PropertyRef Name="NotificationTypeId" />
+          </Key>
+          <Property Name="NotificationType1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NotificationTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityContainer Name="ServiceEdgeCommonEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="NotificationDetails" EntityType="Self.NotificationDetail" />
+          <EntitySet Name="NotificationRecipients" EntityType="Self.NotificationRecipient" />
+          <EntitySet Name="NotificationTypes" EntityType="Self.NotificationType" />
+          <EntitySet Name="NotificationMessages" EntityType="ServiceEdgeCommonModel.NotificationMessage" />
+        </EntityContainer>
+        <EntityType Name="NotificationMessage">
+          <Key>
+            <PropertyRef Name="NotificationMessageId" />
+          </Key>
+          <Property Name="NotificationId" Type="Guid" />
+          <Property Name="DisplayText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NotificationMessageId" Type="Guid" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ServiceEdgeCommonModelStoreContainer" CdmEntityContainer="ServiceEdgeCommonEntities">
+          <EntitySetMapping Name="NotificationDetails">
+            <EntityTypeMapping TypeName="ServiceEdgeCommonModel.NotificationDetail">
+              <MappingFragment StoreEntitySet="NotificationDetails">
+                <ScalarProperty Name="CreatedUpdatedByName" ColumnName="CreatedUpdatedByName" />
+                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
+                <ScalarProperty Name="NotificationTypeId" ColumnName="NotificationTypeId" />
+                <ScalarProperty Name="NotificationNumber" ColumnName="NotificationNumber" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="NotificationStatus" ColumnName="NotificationStatus" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedUpdatedBy" ColumnName="CreatedUpdatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NotificationRecipients">
+            <EntityTypeMapping TypeName="ServiceEdgeCommonModel.NotificationRecipient">
+              <MappingFragment StoreEntitySet="NotificationRecipients">
+                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="NotificationExpiry" ColumnName="NotificationExpiry" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NotificationTypes">
+            <EntityTypeMapping TypeName="ServiceEdgeCommonModel.NotificationType">
+              <MappingFragment StoreEntitySet="NotificationTypes">
+                <ScalarProperty Name="NotificationType1" ColumnName="NotificationType" />
+                <ScalarProperty Name="NotificationTypeId" ColumnName="NotificationTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NotificationMessages">
+            <EntityTypeMapping TypeName="ServiceEdgeCommonModel.NotificationMessage">
+              <MappingFragment StoreEntitySet="NotificationMessages">
+                <ScalarProperty Name="NotificationMessageId" ColumnName="NotificationMessageId" />
+                <ScalarProperty Name="DisplayText" ColumnName="DisplayText" />
+                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
